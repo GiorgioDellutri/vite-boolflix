@@ -1,4 +1,4 @@
-<script>
+<script >
 import AppMain from './components/AppMain.vue';
 import AppHeader from './components/AppHeader.vue';
 import axios from 'axios';
@@ -13,43 +13,51 @@ export default {
   data() {
     return {
       store,
-      apiUrl: 'https://api.themoviedb.org/3/search/movie',
+      moviesApiUrl: 'https://api.themoviedb.org/3/search/movie',
+      tvShowApiKey: 'https://api.themoviedb.org/3/search/tv',
       apiKey: '0a31e483fb79ecbceb90e01e63e05acf'
     }
   },
+
   methods: {
-    getMovies(searchedQuery,) {
-      axios.get(this.apiUrl, {
+    getMovies(searchedQuery) {
+      const firstApiPromise = axios.get(this.moviesApiUrl, {
         params: {
           api_key: this.apiKey,
           query: searchedQuery
         }
-      })
-        .then((response) => {
-          console.log(response.data.results);
-          this.store.moviesData = response.data.results
+      });
+      const secondApiPromise = axios.get(this.tvShowApiKey, {
+        params: {
+          api_key: this.apiKey,
+          query: searchedQuery
+        }
+      });
+      Promise.all([firstApiPromise, secondApiPromise])
+        .then(([firstResponse, secondResponse]) => {
+          console.log(firstResponse.data.results, secondResponse.data.results);
+          this.store.moviesData = firstResponse.data.results
+          this.store.tvShowData = secondResponse.data.results;
         })
         .catch(function (error) {
           console.log(error);
-        })
-    },
-    test() {
-      alert('TEST')
+        });
     }
   },
 
   created() {
-    this.getMovies()
-  },
+
+  }
 }
+
 </script>
 
 <template>
   <header>
-    <AppHeader @search="getMovies" />
+    <AppHeader />
   </header>
   <main>
-    <AppMain />
+    <AppMain @search="getMovies" />
   </main>
 </template>
 
