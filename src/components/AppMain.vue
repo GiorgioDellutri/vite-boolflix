@@ -31,56 +31,39 @@ export default {
 
 <template>
     <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-12 col-md-3">
-                <div class="input-group mb-3">
-                    <!-- utilizzo v-model per creare una relazione tra l'input e la proprietà searchMovie di store.js,
-                    quindi quando si digita qualcosa nell'input si aggiorna automaticamente il valore di searchMovie in
-                    store.js. -->
-
-                    <!-- quando si preme enter o si clicca sul bottone search si emette un evento chiamato search con due argomenti store.searchMovie e store.searchMovie. Questo evento è utilizzato in App.vue per effettuare la ricerca -->
-                    <input type="text" class="form-control" v-model="store.searchMovie"
-                        @keyup.enter="$emit('search', store.searchMovie)" placeholder="Search movies or tv show"
-                        aria-label="Search movies or tv show" aria-describedby="button-addon2">
-                    <button @click="$emit('search', store.searchMovie)"
-                        class="btn btn-outline-secondary btn-danger text-dark fw-5 " type="button"
-                        id="button-addon2">Search</button>
-                </div>
-            </div>
-        </div>
         <div class="row list-movies">
-            <div class="col-sm-12">
+            <div class="col-sm-3">
                 <!-- MOVIES -->
-                <ul>
-                    <!-- effettuo il ciclo v-for che permette di visualizzare i film con i propri dati -->
-                    <li v-for="movieElement in store.moviesData">
-                        <!-- <h1>Movies:</h1> -->
-                        <!-- utilizzo il metodo getImageUrl per generare l'url e lo passo come parametro al metodo per
+                <!-- effettuo il ciclo v-for che permette di visualizzare i film e serie tv  con i propri dati -->
+                <div v-for="movieElement in store.moviesData" class="card" style="width: 18rem;">
+                    <!-- utilizzo il metodo getImageUrl per generare l'url e lo passo come parametro al metodo per
                         generare l'url dell'immagine e poi lo utilizzo come src dell'immagine. In questo modo, posso
                         utilizzare il metodo "getImagePath" per generare l'URL dell'immagine in base al valore di
                         "poster_path" di ogni elemento del ciclo v-for e utilizzarlo come "src" per visualizzare
                         l'immagine nella pagina.Stesso discorso per le serie tv -->
-                        <img v-if="movieElement.poster_path" :src="getImageUrl(movieElement.poster_path)" />
+                    <img v-if="movieElement.poster_path" :src="getImageUrl(movieElement.poster_path)" />
+                    <div class="card-body">
                         <h3> {{ movieElement.original_title }}</h3>
                         <h4> {{ movieElement.title }}</h4>
                         <h5 class="d-inline">Language</h5>
-                        <!-- nell'immagine passo come src il metodo getImagePath per generare l'url dell'immagine della bandiera. Cosi visualizzo l'immagine della bandiera relativa al linguaggio originale del fil o della serie tv -->
+                        <!-- nell'immagine passo come src il metodo getImagePath per generare l'url dell'immagine della
+                        bandiera. Cosi visualizzo l'immagine della bandiera relativa al linguaggio originale del fil o
+                        della serie tv -->
                         <img class="flag-language" :src="getImagePath(movieElement.original_language)" alt="flag">
                         <h5>Vote average : {{ movieElement.vote_average }} stars</h5>
-                    </li>
-                </ul>
+                    </div>
+                </div>
                 <!-- TV SERIES -->
-                <ul>
-                    <li v-for="seriesElement in store.tvShowData">
-                        <!-- <h1>Tv series:</h1> -->
-                        <img v-if="seriesElement.poster_path" :src="getImageUrl(seriesElement.poster_path)" />
+                <div v-for="seriesElement in store.tvShowData" class="card" style="width: 18rem;">
+                    <img v-if="seriesElement.poster_path" :src="getImageUrl(seriesElement.poster_path)" />
+                    <div class="card-body">
                         <h3> {{ seriesElement.original_name }}</h3>
                         <h4> {{ seriesElement.name }}</h4>
                         <h5 class="d-inline">Language</h5>
                         <img class="flag-language" :src="getImagePath(seriesElement.original_language)" alt="flag">
                         <h5>Vote average : {{ seriesElement.vote_average }} stars</h5>
-                    </li>
-                </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
