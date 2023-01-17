@@ -57,6 +57,7 @@ export default {
     <AppHeader />
   </header>
   <main>
+    <!-- quando l'evento "search" viene emesso dal componente "AppMain", la funzione "getMovies" verrà eseguita e che passerà come parametro searchedQuery valore utilizzato per la query "query "nella chiamata all'api. L'api utilizzera questo valore per cercare film o serie tv  -->
     <AppMain @search="getMovies" />
   </main>
 </template>
