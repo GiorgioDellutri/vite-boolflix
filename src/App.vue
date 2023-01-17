@@ -9,37 +9,44 @@ export default {
     AppMain,
     AppHeader,
   },
+
   data() {
     return {
       store,
+      apiUrl: 'https://api.themoviedb.org/3/search/movie',
+      apiKey: '0a31e483fb79ecbceb90e01e63e05acf'
     }
   },
   methods: {
-    getCardList() {
-      axios.get('https://db.ygoprodeck.com/api/v7/cardinfo.php?num=50&offset=0', {
+    getMovies(searchedQuery,) {
+      axios.get(this.apiUrl, {
         params: {
+          api_key: this.apiKey,
+          query: searchedQuery
         }
       })
         .then((response) => {
-          console.log(response.data.data);
-          this.store.cardList = response.data.data;
-          console.log(this)
-
+          console.log(response.data.results);
+          this.store.moviesData = response.data.results
         })
         .catch(function (error) {
           console.log(error);
         })
+    },
+    test() {
+      alert('TEST')
     }
   },
 
   created() {
+    this.getMovies()
   },
 }
 </script>
 
 <template>
   <header>
-    <AppHeader />
+    <AppHeader @search="getMovies" />
   </header>
   <main>
     <AppMain />
@@ -49,4 +56,5 @@ export default {
 <style lang="scss">
 @use './styles/general.scss' as *;
 @use './styles/partials/variables' as *;
+@import 'bootstrap/scss/bootstrap.scss';
 </style>
