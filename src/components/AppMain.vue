@@ -60,7 +60,7 @@ export default {
                     </div>
                 </div>
                 <!-- TV SERIES -->
-                <div v-for="seriesElement in store.tvShowData" class="card" style="width: 18rem;">
+                <div v-for="seriesElement in store.tvShowData" class="card m-3" style="width: 18rem;">
                     <img class=" cover-image" v-if="seriesElement.poster_path"
                         :src="getImageUrl(seriesElement.poster_path)" />
                     <div class="card-body">
