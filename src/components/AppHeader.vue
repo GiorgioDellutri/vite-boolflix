@@ -15,14 +15,14 @@ export default {
 </script>
 
 <template>
-    <div class="container-fluid">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
         <div class="row">
             <div class="col-12">
                 <h1 class="text-danger">BoolFlix</h1>
             </div>
         </div>
         <div class="row">
-            <div class="col-sm-12 col-md-3">
+            <div class="col-sm-12 col-md-12">
                 <div class="input-group mb-3">
                     <!-- utilizzo v-model per creare una relazione tra l'input e la proprietà searchMovie di store.js,
                     quindi quando si digita qualcosa nell'input si aggiorna automaticamente il valore di searchMovie in
@@ -44,4 +44,8 @@ export default {
 @use '../styles/general.scss' as *;
 @use '../styles/partials/variables' as *;
 @import 'bootstrap/scss/bootstrap.scss';
+
+div.input-group {
+    vertical-align: bottom;
+}
 </style>
